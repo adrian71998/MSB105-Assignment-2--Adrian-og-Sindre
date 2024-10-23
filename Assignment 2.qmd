@@ -5,22 +5,27 @@ editor: visual
 bibliography: kilder.bib
 ---
 
-Innledning
+------------------------------------------------------------------------
 
-Literaturgjennomgang
+**Innledning**
+
+*Literaturgjennomgang*
 
 -   Hva sier litteraturen om sammenhengen mellom:
 
-    -   lønn og høyde
+    Lønn og høyde
 
     Ut fra literaturen kan det virke som det er en klar sammenheng mellom høyde og inntekt, og at dette kan være et resultat av både biologiske, sosiale og psykologiske faktorer.
     **Anne Case** og **Christina Paxson** er blant de mener dette, og de mener hver tommer med høyde er assosiert med omtrent 2-2,5% økning i inntekt.
-    De peker blant annet på at høye personer gjør det bedre på kognitive tester som barn, og at dette legger et bedre utgangspunkt for karriere @CasePaxson2006.
+    De peker blant annet på at høye personer gjør det bedre på kognitive tester som barn, og at dette legger et bedre utgangspunkt for karriere [@CasePaxson2006].
     De samme forskerne mener også at i tillegg til bedre kognitive ferdigheter som barn, vil også høyde ofte gi høyere selvtilitt og andre personlige egenskaper som kan være avgjørendende for inntekt.
 
 -   lønnn og bmi
 
-    -   lønn og sivilstatus (gift/ugift)
+    Det er forsket en del på sammenheng mellon BMI og inntekt, men på dette området er funnene noe mer splittet.
+    Det kan virke som om det er en negativ sammenheng mellom høy BMI og inntekt, og at dette er vesentlig tydeligere på kvinner, enn for menn [@Edwards2021].
+
+-   n og sivilstatus (gift/ugift)
 
     -   lønn og utdanning
 
@@ -160,7 +165,7 @@ heights %>%
 Forskjeller mellom de tre inntektsgruppene.
 
 Enorm forskjell på utdanning for de tre gruppene.
-Blant de med høyest inntekt har hele 82% collage plus utdanning, mens de med nullintekt har bare 11% utdanning på dette nivået.
+Blant de med høyest inntekt har hele 82% collage plus utdanning, mens de med nullinntekt har bare 11% utdanning på dette nivået.
 
 Det virker å være noe mindre forskjeller på høyde og bmi.
 Det kan virke som høye personer tjener mer ettersom gjennomsnittet blant de med høy inntekt er merbart høyere.
