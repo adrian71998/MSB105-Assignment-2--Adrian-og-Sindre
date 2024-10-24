@@ -2,6 +2,7 @@
 title: "Ass 2"
 format: html
 editor: visual
+lang: "no"
 bibliography: kilder.bib
 ---
 
@@ -15,21 +16,23 @@ bibliography: kilder.bib
 
     Lønn og høyde
 
-    Ut fra literaturen kan det virke som det er en klar sammenheng mellom høyde og inntekt, og at dette kan være et resultat av både biologiske, sosiale og psykologiske faktorer.
-    **Anne Case** og **Christina Paxson** er blant de mener dette, og de mener hver tommer med høyde er assosiert med omtrent 2-2,5% økning i inntekt.
-    De peker blant annet på at høye personer gjør det bedre på kognitive tester som barn, og at dette legger et bedre utgangspunkt for karriere [@CasePaxson2006].
-    De samme forskerne mener også at i tillegg til bedre kognitive ferdigheter som barn, vil også høyde ofte gi høyere selvtilitt og andre personlige egenskaper som kan være avgjørendende for inntekt.
+    Ut fra literaturen kan det virke som det er en klar sammenheng mellom høyde og inntekt, og at dette kan være et resultat av både biologiske, sosiale og psykologiske faktorer. **Anne Case** og **Christina Paxson** er blant de mener dette, og de mener hver tommer med høyde er assosiert med omtrent 2-2,5% økning i inntekt. De peker blant annet på at høye personer gjør det bedre på kognitive tester som barn, og at dette legger et bedre utgangspunkt for karriere [@CasePaxson2006]. De samme forskerne mener også at i tillegg til bedre kognitive ferdigheter som barn, vil også høyde ofte gi høyere selvtilitt og andre personlige egenskaper som kan være avgjørendende for inntekt.
 
 -   lønnn og bmi
 
-    Det er forsket en del på sammenheng mellon BMI og inntekt, men på dette området er funnene noe mer splittet.
-    Det kan virke som om det er en negativ sammenheng mellom høy BMI og inntekt, og at dette er vesentlig tydeligere på kvinner, enn for menn [@Edwards2021].
+    Det er forsket en del på sammenheng mellon BMI og inntekt, men på dette området er funnene noe mer splittet. Det kan virke som om det er en negativ sammenheng mellom høy BMI og inntekt, og at dette er vesentlig tydeligere på kvinner, enn for menn [@Edwards2021].
 
 -   n og sivilstatus (gift/ugift)
+
+    Det er forsket en del på dette området, og det kan virke som gifte personer, spesielt menn tjener bedre enn ugifte personer. Det er likevel en del naturlige forklaringer bak slike funn. Vi ser ofte at inntekt øker med alder, og at det derfor ofte vil være en yngre gruppe vi studerer når vi ser nærmere på ugifte personer [@fed_stlouis_wage_ladder].
 
     -   lønn og utdanning
 
     -   lønn og kjønn
+
+        Når det kommer til kjønn, virker literaturen å være ganske samstemt.
+        Menn tjener bedre enn kvinner.
+        I følge Jennifer Cheeseman Day (2019), er forskjeller så stor at blant de med høyere utdanning tjener kvinner kun 74 cents for hver dollar menn tjener [@us_census_gender_earnings_gap].
 
 ```{r}
 library(tidyverse)
@@ -40,6 +43,9 @@ library(modelr)
 library(flextable)
 library(vtable)
 library(labeling)
+
+summary(heights)
+
 
 #| lst-label: lst-read-in-data
 #| lst-cap: "Kode for å lese inn data og definere noen nye variabler."
@@ -91,6 +97,8 @@ Starter på EDA analyse
 #|  og resulterende tabell. Hvis det var en figur vi genererte
 #|  ville vi byttet ut `tbl-` med `fig-`."
 heights |> 
+  #fjerner afqt da vi ikke har behov for det her
+  select(-afqt) |>
   st(out = "return") |> 
   as_flextable(max_row = 20) |> 
   line_spacing(space = 0.3, part = "all") |> 
@@ -98,6 +106,8 @@ heights |>
   fontsize(size = 10, part = "header") |> 
   width(width = 16, unit = "mm") |> 
   delete_part("footer")
+
+
 
 # Totalt antall manglende verdier i hele datasettet
 total_missing <- heights %>%
@@ -161,6 +171,8 @@ heights %>%
 
 
 ```
+
+\@ref(tbl:height)
 
 Forskjeller mellom de tre inntektsgruppene.
 
@@ -265,6 +277,21 @@ heightsHighIncFemale <- heightsHighInc %>%
   delete_part("footer")
 heightsHighIncFemale
 
+options(vtable.ft_max_row = 25)
+
+#| eval: false
+#| ft_max_row: 29
+# Default for ft_max_row is 10
+# so just first 10 lines will
+# be printed
+use_df_printer()
+heightsNormInc %>% 
+  select(-afqt) %>% 
+  vtable::st(
+    group = 'sex',
+    group.long = TRUE,
+    out = "return"
+    )
 ```
 
 -   Diskuter forskjellene mellom disse seks gruppene.
@@ -363,4 +390,49 @@ ggplot(aes(
   theme_minimal()
 ```
 
-\
+```{r}
+# ønsker å bruke pairs for å sammenligne inntekt og høyde
+pairs(select(heightsNormInc, income, height))
+```
+
+```{r}
+heights %>% 
+  ggplot(mapping = aes(x = income, fill = sex, colour = sex)) +
+  geom_density(alpha = 0.2, na.rm = TRUE) + 
+  facet_wrap(~sex)
+```
+
+```{r}
+heights %>%  
+ggplot(mapping = aes(x = edu_fac, y = height)) +
+facet_wrap(~sex) + 
+geom_boxplot()
+```
+
+mrk: høyde ser ut til å påvirke utdanning en del, og videre ser vi at utdanning i stor grad preger inntekt.
+
+```{r}
+heights %>%  
+ggplot(mapping = aes(x = edu_fac, y = income)) +
+facet_wrap(~sex) + 
+geom_boxplot()
+```
+
+Notat boxplotter: Utdanning har definitivt innvirkning på inntekt.
+
+Og høyde virker også å spille inn på inntekt.
+
+```{r}
+ggplot(data = heights,
+       aes(
+         x = height,
+         y = income)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue", linetype = "dashed") +  # Legger til en lineær trendlinje
+  labs(
+    x = "Hoyde (cm)",
+    y = "Inntekt (NOK)"
+  ) +
+  theme_minimal() +
+  facet_wrap(~ edu_fac)
+```
