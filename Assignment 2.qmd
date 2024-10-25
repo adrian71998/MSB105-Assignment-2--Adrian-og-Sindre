@@ -294,7 +294,7 @@ heightsNormInc %>%
     )
 ```
 
--   Diskuter forskjellene mellom disse seks gruppene.
+-   Diskuter forskjellene mellom disse seks gruppene:
 
 ```{=html}
 <!-- -->
@@ -306,7 +306,15 @@ heightsNormInc %>%
 
     -   Diskuter eventuelle funn
 
--   Diskuter om det som fremkommer fra den deskreptive statistikken dere har generert ovenfor samsvar med funn i literaturen.
+-   Diskuter om det som fremkommer fra den deskreptive statistikken dere har generert ovenfor samsvar med funn i literaturen:
+
+    Når det kommer til høyde kan det ut fra den deskribtive statistikken vår virke som om literaturen har rett når det kommer til høyde.
+    I modellene hvor henholdsvis nullintekt, normal inntekt og høy inntekt er filtrert ut ser vi at høyden øker noe for hver kategori.
+    Likevel må det nevnes at andelen menn øker i for hver gruppe, og flere menn vil også dra opp gjennomsnittshøyden.
+    Splittet på kjønn virker det som høyden er mindre avgjørende, på tross av at gjennomsnittet er noe høyere for begge kjønn blant de som tjener best.
+
+    I litteraturen kom det frem at det var noe vage sammenhenger mellom BMI og inntekt.
+    Men utfra den deskribtive statistikken vår kan det se ut som om litteraturen har rett i at økning i BMI kan ha negativ påvirkning på inntekt, spesielt for kvinner.
 
 GGPLOTS
 
@@ -426,7 +434,8 @@ Og høyde virker også å spille inn på inntekt.
 ggplot(data = heights,
        aes(
          x = height,
-         y = income)) +
+         y = income,
+         color = sex)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "blue", linetype = "dashed") +  # Legger til en lineær trendlinje
   labs(
@@ -436,3 +445,5 @@ ggplot(data = heights,
   theme_minimal() +
   facet_wrap(~ edu_fac)
 ```
+
+Det kan virke som om høyde spiller en større rolle desto høyere utdanning man har.
