@@ -1,0 +1,466 @@
+---
+title: "Ass 2"
+format: html
+editor: visual
+lang: "no"
+bibliography: kilder.bib
+---
+
+------------------------------------------------------------------------
+
+**Innledning**
+
+I dette minipaperet skal vi se nærmere på forholdet mellom høyde og inntekt, og prøve å finne svar på om det er høyden som bestemmer inntekten vår, ved hjelp av datasettet Heights.
+Besvarelsen vil starte med en generell literaturgjennomgang hvor vi ser nærmere på forholdet mellom inntekt og en rekke andre faktorer, blant annet bmi, sivilstatus, utdanning og kjønn.
+
+Deretter vil oppgaven se nærmere på det aktuelle datasettet, og bruke deskribtive statistikker for å analysere sammenhenger mellom ulike faktorer, og knytte dette opp mot literaturgjennomgangen.
+Videre brukes grafiske modeller for å studere andre relevante sammenhenger, får det til slutt skal konkluderes hvorvidt det er høyde som bestemmer inntekt.
+
+*Literaturgjennomgang*
+
+-   Hva sier litteraturen om sammenhengen mellom:
+
+    Lønn og høyde
+
+    Ut fra literaturen kan det virke som det er en klar sammenheng mellom høyde og inntekt, og at dette kan være et resultat av både biologiske, sosiale og psykologiske faktorer.
+    **Anne Case** og **Christina Paxson** er blant de mener dette, og de mener hver tommer med høyde er assosiert med omtrent 2-2,5% økning i inntekt.
+    De peker blant annet på at høye personer gjør det bedre på kognitive tester som barn, og at dette legger et bedre utgangspunkt for karriere [@CasePaxson2006].
+    De samme forskerne mener også at i tillegg til bedre kognitive ferdigheter som barn, vil også høyde ofte gi høyere selvtilitt og andre personlige egenskaper som kan være avgjørendende for inntekt.
+
+-   lønnn og bmi
+
+    Det er forsket en del på sammenheng mellon BMI og inntekt, men på dette området er funnene noe mer splittet.
+    Det kan virke som om det er en negativ sammenheng mellom høy BMI og inntekt, og at dette er vesentlig tydeligere på kvinner, enn for menn [@Edwards2021].
+
+-   n og sivilstatus (gift/ugift)
+
+    Det er forsket en del på dette området, og det kan virke som gifte personer, spesielt menn tjener bedre enn ugifte personer.
+    Det er likevel en del naturlige forklaringer bak slike funn.
+    Vi ser ofte at inntekt øker med alder, og at det derfor ofte vil være en yngre gruppe vi studerer når vi ser nærmere på ugifte personer [@fed_stlouis_wage_ladder].
+
+    -   lønn og utdanning
+
+    -   lønn og kjønn
+
+        Når det kommer til kjønn, virker literaturen å være ganske samstemt.
+        Menn tjener bedre enn kvinner.
+        I følge Jennifer Cheeseman Day (2019), er forskjeller så stor at blant de med høyere utdanning tjener kvinner kun 74 cents for hver dollar menn tjener [@us_census_gender_earnings_gap].
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(forcats)
+library(modelr)
+library(flextable)
+library(vtable)
+library(labeling)
+
+summary(heights)
+
+
+#| lst-label: lst-read-in-data
+#| lst-cap: "Kode for å lese inn data og definere noen nye variabler."
+heights <- modelr::heights
+
+heights <- heights %>% 
+  mutate(
+    bmi = weight * 0.4536/(height * 2.54/100)^2,
+    married = fct_collapse(
+      .f = marital,
+      married = "married",
+      other_level = "not married"
+    ),
+    edu_fac = cut(
+      x = education,
+      breaks = c(0, 12, 14, 16, 21),
+      labels = c("not_hs", "not_cc", "not_col", "col_plus"),
+      right = FALSE
+    )
+  ) |> 
+  # reorganiserer data s.a. de fire faktor-variablerne kommer
+  # lengst til høyre
+  select(income:age, education:bmi, everything()) |>
+  # Dropper marital og education siden disse ikke skal brukes
+  select(-education, -marital)
+
+# Inntekt lik 0
+heightsZeroInc <- heights |> 
+  filter(income == 0)
+# «Normal» inntekt
+heightsNormInc <- heights |> 
+  filter(income > 0 & income < 343830)
+heightsHighInc <- heights |> 
+  filter(income == 343830)
+
+
+```
+
+Starter på EDA analyse
+
+```{r}
+# legger inn deskriptiv statistikk for høyde totalt
+#| label: tbl-desc-stat
+#| tbl-cap: "Deskreptiv statistikk for datasettet `modelr::heights`."
+#| lst-label: lst-heights-st
+#| lst-cap: "Kode for å generere deskreptiv-statistikk tabell vha.
+#| funksjonene `st()` og `as_flextable()`. Merk bruken av
+#| «hash pipes». Her setter vi label og caption for både kode-listing
+#|  og resulterende tabell. Hvis det var en figur vi genererte
+#|  ville vi byttet ut `tbl-` med `fig-`."
+heights |> 
+  #fjerner afqt da vi ikke har behov for det her
+  select(-afqt) |>
+  st(out = "return") |> 
+  as_flextable(max_row = 20) |> 
+  line_spacing(space = 0.3, part = "all") |> 
+  fontsize(size = 9, part = "body") |> 
+  fontsize(size = 10, part = "header") |> 
+  width(width = 16, unit = "mm") |> 
+  delete_part("footer")
+
+
+
+# Totalt antall manglende verdier i hele datasettet
+total_missing <- heights %>%
+  summarize_all(~ sum(is.na(.))) %>%
+  summarise(total_missing = sum(across(everything()))) %>%
+  pull(total_missing)
+
+print(total_missing)
+
+#| label: tbl-height
+#| caption: "Deskriptiv statistikk for høyde."
+height_stats <- heights %>%
+  summarise(
+    Mean = mean(height, na.rm = TRUE),
+    SD = sd(height, na.rm = TRUE),
+    Min = min(height, na.rm = TRUE),
+    Median = median(height, na.rm = TRUE),
+    Max = max(height, na.rm = TRUE)
+  )
+
+print(height_stats)
+
+
+#| label: tbl-zeroInc
+#| tbl-cap: "Deskriptiv statistikk for delsettet med ingen inntekt."
+heights |>
+  filter(income == 0) |>
+  st(out = "return") |>
+  as_flextable(max_row = 20) |>
+  line_spacing(space = 0.3, part = "all") |>
+  fontsize(size = 9, part = "body") |>
+  fontsize(size = 10, part = "header") |>
+  width(width = 16, unit = "mm") |>
+  delete_part("footer")
+
+
+#|label: tbl-normInc
+#| tbl-cap: "Deskriptiv statistikk for delsettet med normal inntekt."
+heights %>%
+  filter(income > 0 & income < 343830) %>%
+  st(out = "return") %>%
+  as_flextable(max_row = 20) %>%
+  line_spacing(space = 0.3, part = "all") %>%
+  fontsize(size = 9, part = "body") %>%
+  fontsize(size = 10, part = "header") %>%
+  width(width = 16, unit = "mm") %>%
+  delete_part("footer")
+
+
+#| label: tbl-highInc
+#| tbl-cap: "Deskriptiv statistikk for delsettet med høy inntekt."
+heights %>%
+  filter(income >= 343830) %>%
+  st(out = "return") %>%
+  as_flextable(max_row = 20) %>%
+  line_spacing(space = 0.3, part = "all") %>%
+  fontsize(size = 9, part = "body") %>%
+  fontsize(size = 10, part = "header") %>%
+  width(width = 16, unit = "mm") %>%
+  delete_part("footer")
+
+
+```
+
+\@ref(tbl:height)
+
+Forskjeller mellom de tre inntektsgruppene.
+
+Enorm forskjell på utdanning for de tre gruppene.
+Blant de med høyest inntekt har hele 82% collage plus utdanning, mens de med nullinntekt har bare 11% utdanning på dette nivået.
+
+Det virker å være noe mindre forskjeller på høyde og bmi.
+Det kan virke som høye personer tjener mer ettersom gjennomsnittet blant de med høy inntekt er merbart høyere.
+Men dette virker å ha en naturlig sammenheng med at andelen menn i denne kategorien er høy.
+Og menn vil naturligvis dra opp gjennomsnittet.
+
+Det er også interessant hvordan andelen gifte personer er ulik for de ulike gruppene.
+Blant de med gjennomsnittelig inntekt er det merbart flere gifte personer enn de med nullinntekt.
+Mens andel gifte virker å øke betraktelig igjen blant de med høyest inntekt.
+
+Som vi var inne på over er menn svært dominerende blant de med høyest inntekt.
+Blant de med nullinntekt er kvinner noe overrepresentert, mens det er relativt jevnt fordelt blant de med normale inntekter.
+
+Går over til å splitte på kjønn
+
+```{r}
+
+#| eval: false
+#| ft_max_row: 15
+# Default for ft_max_row is 10
+# so just first 10 lines will
+# be printed
+use_df_printer()
+heights %>%
+  vtable::st(
+    group = 'sex',
+    group.long = TRUE,
+    out = "return"
+    )
+
+
+
+height_zero_inc_male <- heights |>
+  filter(sex == 'male' & income ==0) |>
+  st(out = "return") |>
+  as_flextable(max_row = 20) |>
+  line_spacing(space = 0.3, part = "all") |>
+  fontsize(size = 9, part = "body") |>
+  fontsize(size = 10, part = "header") |>
+  width(width = 16, unit = "mm") |>
+  delete_part("footer")
+height_zero_inc_male
+
+heights_zero_inc_female <- heights %>%
+  filter(sex == 'female' & income ==0) |>
+  st(out = "return") |>
+  as_flextable(max_row = 20) |>
+  line_spacing(space = 0.3, part = "all") |>
+  fontsize(size = 9, part = "body") |>
+  fontsize(size = 10, part = "header") |>
+  width(width = 16, unit = "mm") |>
+  delete_part("footer")
+heights_zero_inc_female
+
+
+heightsNormIncFemale <- heightsNormInc %>%
+  filter(sex == 'female') %>%
+  st(out = "return") |>
+  as_flextable(max_row = 20) |>
+  line_spacing(space = 0.3, part = "all") |>
+  fontsize(size = 9, part = "body") |>
+  fontsize(size = 10, part = "header") |>
+  width(width = 16, unit = "mm") |>
+  delete_part("footer")
+heightsNormIncFemale
+
+heightsNormIncMale <- heightsNormInc %>%
+  filter(sex == 'male') |>
+  st(out = "return") |>
+  as_flextable(max_row = 20) |>
+  line_spacing(space = 0.3, part = "all") |>
+  fontsize(size = 9, part = "body") |>
+  fontsize(size = 10, part = "header") |>
+  width(width = 16, unit = "mm") |>
+  delete_part("footer")
+heightsNormIncMale
+
+heightsHighIncMale <- heightsHighInc %>%
+  filter(sex == 'male') |>
+  st(out = "return") |>
+  as_flextable(max_row = 20) |>
+  line_spacing(space = 0.3, part = "all") |>
+  fontsize(size = 9, part = "body") |>
+  fontsize(size = 10, part = "header") |>
+  width(width = 16, unit = "mm") |>
+  delete_part("footer")
+heightsHighIncMale
+
+heightsHighIncFemale <- heightsHighInc %>%
+  filter(sex == 'female') |>
+  st(out = "return") |>
+  as_flextable(max_row = 20) |>
+  line_spacing(space = 0.3, part = "all") |>
+  fontsize(size = 9, part = "body") |>
+  fontsize(size = 10, part = "header") |>
+  width(width = 16, unit = "mm") |>
+  delete_part("footer")
+heightsHighIncFemale
+
+options(vtable.ft_max_row = 25)
+
+#| eval: false
+#| ft_max_row: 29
+# Default for ft_max_row is 10
+# so just first 10 lines will
+# be printed
+use_df_printer()
+heightsNormInc %>% 
+  select(-afqt) %>% 
+  vtable::st(
+    group = 'sex',
+    group.long = TRUE,
+    out = "return"
+    )
+```
+
+-   Diskuter forskjellene mellom disse seks gruppene:
+
+<!-- -->
+
+-   For datasettet *normal inntekt*
+
+    -   Er det noen interessante sammenhenger mht.
+        noen av de andre variablene?
+
+    -   Diskuter eventuelle funn
+
+-   Diskuter om det som fremkommer fra den deskreptive statistikken dere har generert ovenfor samsvar med funn i literaturen:
+
+    Når det kommer til høyde kan det ut fra den deskribtive statistikken vår virke som om literaturen har rett når det kommer til høyde.
+    I modellene hvor henholdsvis nullintekt, normal inntekt og høy inntekt er filtrert ut ser vi at høyden øker noe for hver kategori.
+    Likevel må det nevnes at andelen menn øker i for hver gruppe, og flere menn vil også dra opp gjennomsnittshøyden.
+    Splittet på kjønn virker det som høyden er mindre avgjørende, på tross av at gjennomsnittet er noe høyere for begge kjønn blant de som tjener best.
+
+    I litteraturen kom det frem at det var noe vage sammenhenger mellom BMI og inntekt.
+    Men utfra den deskribtive statistikken vår kan det se ut som om litteraturen har rett i at økning i BMI kan ha negativ påvirkning på inntekt, spesielt for kvinner.
+
+    Når det kommer til sammenhengen mellom kjønn og inntekt, ser vi at tabellene våre indikerer akkurat det samme som literaturen, at menn generelt har høyere inntekt enn kvinner.
+    Dette gjenspeiles både i at kvinner er overrepresentert blant de med null-innteker, samt at kun 12 kvinner er blant de 147 med høyest inntekt
+
+GGPLOTS
+
+```{r}
+#| label: fig-norm-inc
+#| fig-cap: "Plot av inntekt mot høyde. Fra den sorte modell-linjen som er
+#| lagt inn ser vi at det ser ut til å være en positiv sammenheng
+#|  mellom høyde og inntekt. Det er også lagt inn seperate modell-linjer for kvinner og menn Vi merker oss at sammenhengen mellom høyde og inntekt virker mindre når kjønn hensyntas i modell-linjene."
+#| lst-label: lst-norm-inc-plot
+#| lst-cap: "Kode for å generere «scatterplot» vha. `ggplot2`."
+heightsNormInc  |> 
+  ggplot(
+  mapping = aes(
+    x = height,
+    y = income,
+    color = sex
+    )
+  ) + 
+  geom_jitter(
+    size = 1,
+    alpha = 0.40
+    ) +
+  geom_smooth(
+    formula = y ~ x,
+    method = "lm",
+    colour = "black",
+    lwd = 0.75,
+    se = FALSE
+    ) +
+  geom_smooth(
+    aes(colour = sex),
+    formula = y ~ x,
+    method = "lm",
+    lwd = 0.75,
+    se = FALSE)
+ 
+
+```
+
+Plottet \@1st-fig-norm-inc over forteller oss en rekke ting, og bekrefter en del av observasjonene som er diskutert tidligere i paperet.
+Fargene på observasjoene bekrefter det vi allerede vet, at menn generelt er høyere enn kvinner, og at flere menn enn kvinner har høy inntekt.
+Den sorte modell-linjen forteller oss i utgangspunktet at det virker å være en positiv sammengeng mellom høyde og inntekt.
+De rød og blå linjene viser også sammenheng mellom høyde og inntekt, men for henholdsvis menn og kvinner.
+Vi ser da at sammenhengen ikke er like tydelig, akkurat som diskutert tidligere i oppgaven.
+
+```{r}
+heightsNormInc %>%
+  ggplot(
+    mapping = aes(
+      x = income
+      )
+    ) +
+  geom_histogram(
+    bins = 30)
+
+heightsNormInc %>%
+  ggplot(
+    mapping = aes(
+      x = height
+      )
+    ) +
+  geom_histogram(
+    bins = 30)
+
+
+heightsNormInc %>%
+ggplot(aes(
+  x = income)
+  ) +
+  geom_histogram(aes(
+    y = ..density..),
+    bins = 30,
+    fill = "green",
+    alpha = 0.6,
+    color = "black"
+    ) + 
+  geom_density(
+    color = "red",
+    size = 1
+    ) + 
+  labs(title = "Fordeling av inntekt",
+       x = "Inntekt",
+       y = "Tetthet") +
+  theme_minimal()
+```
+
+```{r}
+# ønsker å bruke pairs for å sammenligne inntekt og høyde
+pairs(select(heightsNormInc, income, height))
+```
+
+```{r}
+heights %>% 
+  ggplot(mapping = aes(x = income, fill = sex, colour = sex)) +
+  geom_density(alpha = 0.2, na.rm = TRUE) + 
+  facet_wrap(~sex)
+```
+
+```{r}
+heights %>%  
+ggplot(mapping = aes(x = edu_fac, y = height)) +
+facet_wrap(~sex) + 
+geom_boxplot()
+```
+
+mrk: høyde ser ut til å påvirke utdanning en del, og videre ser vi at utdanning i stor grad preger inntekt.
+
+```{r}
+heights %>%  
+ggplot(mapping = aes(x = edu_fac, y = income)) +
+facet_wrap(~sex) + 
+geom_boxplot()
+```
+
+Notat boxplotter: Utdanning har definitivt innvirkning på inntekt.
+
+Og høyde virker også å spille inn på inntekt.
+
+```{r}
+ggplot(data = heights,
+       aes(
+         x = height,
+         y = income,
+         color = sex)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue", linetype = "dashed") +  # Legger til en lineær trendlinje
+  labs(
+    x = "Hoyde (cm)",
+    y = "Inntekt (NOK)"
+  ) +
+  theme_minimal() +
+  facet_wrap(~ edu_fac)
+```
+
+Det kan virke som om høyde spiller en større rolle desto høyere utdanning man har.
