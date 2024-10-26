@@ -418,6 +418,8 @@ ggplot(aes(
 ```{r}
 # ønsker å bruke pairs for å sammenligne inntekt og høyde
 pairs(select(heightsNormInc, income, height))
+
+pairs(select(heightsNormInc, bmi, income))
 ```
 
 ```{r}
