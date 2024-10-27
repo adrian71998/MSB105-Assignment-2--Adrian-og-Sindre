@@ -1,14 +1,14 @@
 ---
-title: "Ass 2"
+title: "Assignment 2 - Adrian og Sindre"
 format: html
 editor: visual
-lang: "no"
+lang: "nb"
 bibliography: kilder.bib
 ---
 
 ------------------------------------------------------------------------
 
-**Innledning**
+## **Innledning**
 
 I dette minipaperet skal vi se nærmere på forholdet mellom høyde og inntekt, og prøve å finne svar på om det er høyden som bestemmer inntekten vår, ved hjelp av datasettet Heights.
 Besvarelsen vil starte med en generell literaturgjennomgang hvor vi ser nærmere på forholdet mellom inntekt og en rekke andre faktorer, blant annet bmi, sivilstatus, utdanning og kjønn.
@@ -16,35 +16,40 @@ Besvarelsen vil starte med en generell literaturgjennomgang hvor vi ser nærmere
 Deretter vil oppgaven se nærmere på det aktuelle datasettet, og bruke deskribtive statistikker for å analysere sammenhenger mellom ulike faktorer, og knytte dette opp mot literaturgjennomgangen.
 Videre brukes grafiske modeller for å studere andre relevante sammenhenger, får det til slutt skal konkluderes hvorvidt det er høyde som bestemmer inntekt.
 
-*Literaturgjennomgang*
+### ***Literaturgjennomgang***
 
--   Hva sier litteraturen om sammenhengen mellom:
+Denne delen av oppgaven vil benytte eksterne kilder, og gjøre rede for hva teori og forskning mener er sammenhengen mellom lønn og henholdsvis, høyde, bmi, sivilstatus, utdanning og kjønn.
 
-    Lønn og høyde
+##### Lønn og høyde
 
-    Ut fra literaturen kan det virke som det er en klar sammenheng mellom høyde og inntekt, og at dette kan være et resultat av både biologiske, sosiale og psykologiske faktorer.
-    **Anne Case** og **Christina Paxson** er blant de mener dette, og de mener hver tommer med høyde er assosiert med omtrent 2-2,5% økning i inntekt.
-    De peker blant annet på at høye personer gjør det bedre på kognitive tester som barn, og at dette legger et bedre utgangspunkt for karriere [@CasePaxson2006].
-    De samme forskerne mener også at i tillegg til bedre kognitive ferdigheter som barn, vil også høyde ofte gi høyere selvtilitt og andre personlige egenskaper som kan være avgjørendende for inntekt.
+Ut fra literaturen kan det virke som det er en klar sammenheng mellom høyde og inntekt, og at dette kan være et resultat av både biologiske, sosiale og psykologiske faktorer.
+**Anne Case** og **Christina Paxson** er blant de mener dette, og de mener hver tommer med høyde er assosiert med omtrent 2-2,5% økning i inntekt.
+De peker blant annet på at høye personer gjør det bedre på kognitive tester som barn, og at dette legger et bedre utgangspunkt for karriere [@CasePaxson2006].
+De samme forskerne mener også at i tillegg til bedre kognitive ferdigheter som barn, vil også høyde ofte gi høyere selvtilitt og andre personlige egenskaper som kan være avgjørendende for inntekt.
 
--   lønnn og bmi
+##### lønn og bmi
 
-    Det er forsket en del på sammenheng mellon BMI og inntekt, men på dette området er funnene noe mer splittet.
-    Det kan virke som om det er en negativ sammenheng mellom høy BMI og inntekt, og at dette er vesentlig tydeligere på kvinner, enn for menn [@Edwards2021].
+Det er forsket en del på sammenheng mellon BMI og inntekt, men på dette området er funnene noe mer splittet.
+Det kan virke som om det er en negativ sammenheng mellom høy BMI og inntekt, og at dette er vesentlig tydeligere på kvinner, enn for menn [@Edwards2021].
 
--   n og sivilstatus (gift/ugift)
+##### Lønn og sivilstatus
 
-    Det er forsket en del på dette området, og det kan virke som gifte personer, spesielt menn tjener bedre enn ugifte personer.
-    Det er likevel en del naturlige forklaringer bak slike funn.
-    Vi ser ofte at inntekt øker med alder, og at det derfor ofte vil være en yngre gruppe vi studerer når vi ser nærmere på ugifte personer [@fed_stlouis_wage_ladder].
+Det er forsket en del på dette området, og det kan virke som gifte personer, spesielt menn tjener bedre enn ugifte personer.
+Det er likevel en del naturlige forklaringer bak slike funn.
+Vi ser ofte at inntekt øker med alder, og at det derfor ofte vil være en yngre gruppe vi studerer når vi ser nærmere på ugifte personer [@fed_stlouis_wage_ladder].
 
-    -   lønn og utdanning
+##### lønn og utdanning
 
-    -   lønn og kjønn
+Litteraturen viser en sterk positiv sammenheng mellom utdanning og inntekt, hvor høyere utdanning generelt fører til høyere lønn.
+Jacob Mincers inntektsfunksjon illustrerer at hvert år med utdanning øker inntekten med omtrent 10 % globalt \[\@mincer1974schooling\].
 
-        Når det kommer til kjønn, virker literaturen å være ganske samstemt.
-        Menn tjener bedre enn kvinner.
-        I følge Jennifer Cheeseman Day (2019), er forskjeller så stor at blant de med høyere utdanning tjener kvinner kun 74 cents for hver dollar menn tjener [@us_census_gender_earnings_gap].
+##### lønn og kjønn
+
+Når det kommer til kjønn, virker literaturen å være ganske samstemt.
+Menn tjener bedre enn kvinner.
+I følge Jennifer Cheeseman Day (2019), er forskjeller så stor at blant de med høyere utdanning tjener kvinner kun 74 cents for hver dollar menn tjener [@us_census_gender_earnings_gap].
+
+Starter på EDA analyse
 
 ```{r}
 library(tidyverse)
@@ -188,13 +193,14 @@ heights %>%
 
 Forskjeller mellom de tre inntektsgruppene.
 
-Enorm forskjell på utdanning for de tre gruppene.
+Den deskribtive statistikken over viser stor forskjell på utdanning for de tre gruppene.
 Blant de med høyest inntekt har hele 82% collage plus utdanning, mens de med nullinntekt har bare 11% utdanning på dette nivået.
+Vi ser også stor forskjell på utdanningsnivå fra gruppen med nullinntekt og gruppen med normale inntekter.
 
 Det virker å være noe mindre forskjeller på høyde og bmi.
 Det kan virke som høye personer tjener mer ettersom gjennomsnittet blant de med høy inntekt er merbart høyere.
 Men dette virker å ha en naturlig sammenheng med at andelen menn i denne kategorien er høy.
-Og menn vil naturligvis dra opp gjennomsnittet.
+Og menn vil naturligvis dra opp gjennomsnittet for høyde.
 
 Det er også interessant hvordan andelen gifte personer er ulik for de ulike gruppene.
 Blant de med gjennomsnittelig inntekt er det merbart flere gifte personer enn de med nullinntekt.
@@ -317,7 +323,7 @@ heightsNormInc %>%
 
     -   Diskuter eventuelle funn
 
--   Diskuter om det som fremkommer fra den deskreptive statistikken dere har generert ovenfor samsvar med funn i literaturen:
+    ##### Samsvarer det som fremkommer fra den deskrivptive statistikken med funnene fra literaturen?
 
     Når det kommer til høyde kan det ut fra den deskribtive statistikken vår virke som om literaturen har rett når det kommer til høyde.
     I modellene hvor henholdsvis nullintekt, normal inntekt og høy inntekt er filtrert ut ser vi at høyden øker noe for hver kategori.
@@ -326,6 +332,11 @@ heightsNormInc %>%
 
     I litteraturen kom det frem at det var noe vage sammenhenger mellom BMI og inntekt.
     Men utfra den deskribtive statistikken vår kan det se ut som om litteraturen har rett i at økning i BMI kan ha negativ påvirkning på inntekt, spesielt for kvinner.
+
+    Utfra statistikken er det også åpenbart at utdanning spiller en viktig rolle for inntekt.
+    Dette viser igjen i fordelingen av utdanning for de med henholdsvis nullinntekt, normal inntekt og høy inntekt.
+    Blant de som tjener best er andelen med høyere utdanning svært høy.
+    Dette samsvarer også bra med informasjonen fra literaturdelen.
 
     Når det kommer til sammenhengen mellom kjønn og inntekt, ser vi at tabellene våre indikerer akkurat det samme som literaturen, at menn generelt har høyere inntekt enn kvinner.
     Dette gjenspeiles både i at kvinner er overrepresentert blant de med null-innteker, samt at kun 12 kvinner er blant de 147 med høyest inntekt
@@ -430,11 +441,21 @@ heights %>%
 ```
 
 ```{r}
+#| label: fig-height-edufac
+#| fig-cap: >
+#|   Bokplot av utdanning mot høyde. Modellen er splittet på kjonn og viser menn
+#|   til venstre, og kvinner til høyre. Det kan virke som det er en positiv sammenheng
+#|   mellom høyde og utdanningsnivå både for kvinner og menn.
+
 heights %>%  
 ggplot(mapping = aes(x = edu_fac, y = height)) +
 facet_wrap(~sex) + 
 geom_boxplot()
 ```
+
+Utfra det vi har sett tidligere, både i teoridelen og i den deskriptive statistikken, kan det tyde på at utdanning er en svært viktig faktor for inntekt.
+Den er derfor interessant å sjekke nærmere og høyde kan ha betydning for utdanningsnivå.
+Vi lager derfor en boxplit som viser utdanning i forhold til høyde, og facer denne mht kjønn.
 
 mrk: høyde ser ut til å påvirke utdanning en del, og videre ser vi at utdanning i stor grad preger inntekt.
 
