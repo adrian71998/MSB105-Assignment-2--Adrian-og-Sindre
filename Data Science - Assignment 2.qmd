@@ -22,32 +22,45 @@ Denne delen av oppgaven vil benytte eksterne kilder, og gjøre rede for hva teor
 
 ##### Lønn og høyde
 
-Ut fra literaturen kan det virke som det er en klar sammenheng mellom høyde og inntekt, og at dette kan være et resultat av både biologiske, sosiale og psykologiske faktorer.
-**Anne Case** og **Christina Paxson** er blant de mener dette, og de mener hver tommer med høyde er assosiert med omtrent 2-2,5% økning i inntekt.
+Flere studier, inkludert US Census og Robert Roy Britt, viser en sammenheng mellom høyde og lønn.
+Høyde kan være en indikator på helse og ernæring i barndommen, som videre kan påvirke utdanning og arbeidsmuligheter [@Bureau], [@published2009].
+De finner at høyere individer i gjennomsnitt har høyere inntekter, noe som kan være relatert til oppfattelser av høyde som et signal om styrke og lederskap i arbeidslivet.
+Det kan også være at høyere individer opplever mindre diskriminering i arbeidsmarkedet og blir sett på som mer selvsikre, noe som kan være attraktivt for arbeidsgivere.
+Denne sammenhengen tyder på at det finnes flere underliggende faktorer som knytter høyde til økonomisk suksess, og som er viktig å ta hensyn til når man studerer arbeidsmarkedet.
+I tillegg viser Robert sitt studie at høyere individer har bedre selvopplevd helse, noe som også kan bidra til høyere inntektsnivå.
+Anne Case og Christina Paxson er blant de som mener dette, og de mener hver tommer med høyde er assosiert med omtrent 2-2,5% økning i inntekt.
 De peker blant annet på at høye personer gjør det bedre på kognitive tester som barn, og at dette legger et bedre utgangspunkt for karriere [@CasePaxson2006].
 De samme forskerne mener også at i tillegg til bedre kognitive ferdigheter som barn, vil også høyde ofte gi høyere selvtilitt og andre personlige egenskaper som kan være avgjørendende for inntekt.
 
 ##### lønn og bmi
 
-Det er forsket en del på sammenheng mellon BMI og inntekt, men på dette området er funnene noe mer splittet.
-Det kan virke som om det er en negativ sammenheng mellom høy BMI og inntekt, og at dette er vesentlig tydeligere på kvinner, enn for menn [@Edwards2021].
+lønn og BMI, som diskutert av Böckerman, petri og Cawley, indikerer at høy BMI generelt har en negativ innvirkning på lønn, spesielt for kvinner [@Bockerman2019].
+I tillegg kan personer med høyere BMI møte utfordringer som lavere selvtillit og færre karrieremuligheter på grunn av samfunnsmessige stigma knyttet til vekt.
+Studier viser også at sammenhengen mellom BMI og inntekt kan variere mellom kjønn og regioner, noe som antyder at kulturelle normer og holdninger spiller en viktig rolle i hvordan vekt påvirker inntekten.
+Videre viser studien til Christina Hansen Edwards m.fl.
+at individer med høyere BMI har redusert lønnsutvikling sammenlignet med individer med normal BMI, spesielt over en lengre tidsperiode [@Edwards2021].
+For menn er sammenhengen ofte svakere eller ikke-eksisterende, mens kvinner ofte opplever en mer betydelig negativ effekt.
 
 ##### Lønn og sivilstatus
 
-Det er forsket en del på dette området, og det kan virke som gifte personer, spesielt menn tjener bedre enn ugifte personer.
-Det er likevel en del naturlige forklaringer bak slike funn.
+Når det gjelder sivilstatus, finner Guillaume Vandenbroucke at gifte individer ofte har høyere lønn enn ugifte.
+Dette kan skyldes flere faktorer, som at gifte personer kan ha en stabiliserende effekt på økonomien og ofte nyter fordeler som bedre helse og økt nettverk som kan føre til høyere inntekt [@Vandenbroucke].
+I tillegg kan gifte personer ha tilgang til ekstra ressurser og støtte som bidrar til karriereutvikling og jobbstabilitet [@OnTheEconomy2020].
 Vi ser ofte at inntekt øker med alder, og at det derfor ofte vil være en yngre gruppe vi studerer når vi ser nærmere på ugifte personer [@fed_stlouis_wage_ladder].
+Sivilstatus kan dermed ha en betydelig påvirkning på en persons inntekt, og det å være gift ser ut til å være en fordel i mange økonomiske sammenhenger.
 
 ##### lønn og utdanning
 
-Litteraturen viser en sterk positiv sammenheng mellom utdanning og inntekt, hvor høyere utdanning generelt fører til høyere lønn.
-Jacob Mincers inntektsfunksjon illustrerer at hvert år med utdanning øker inntekten med omtrent 10 % globalt \[\@mincer1974schooling\].
+Flere studier, inkludert US Census og Robert Roy Britt, viser en sterk positiv sammenheng mellom utdanning og lønn \[@Bureau\]. Høyere utdanning fører ofte til bedre kvalifikasjoner og muligheter for høyere betalte jobber. Utdanning øker ikke bare inntekten direkte, men påvirker også individets evne til å tilpasse seg et arbeidsmarked i endring. Videre gir utdanning tilgang til sosiale nettverk og anerkjennelse, som begge kan være verdifulle for å sikre høyere lønn \[@published2009\]. De med høyere utdanning har også større mulighet til å få stillinger som gir økonomisk sikkerhet og karriereutvikling, noe som igjen fører til bedre langsiktige inntektsmuligheter. Dette gjør at utdanning kan sees som en av de viktigste investeringene for å sikre høyere levestandard og sosial mobilitet. Jacob Mincers inntektsfunksjon illustrerer at hvert år med utdanning øker inntekten med omtrent 10 % globalt \[@mincer1974schooling\].
+Dette gjør at utdanning kan sees som en av de viktigste investeringen for å sikre høyere levestandard og inntekt.
 
 ##### lønn og kjønn
 
-Når det kommer til kjønn, virker literaturen å være ganske samstemt.
-Menn tjener bedre enn kvinner.
-I følge Jennifer Cheeseman Day (2019), er forskjeller så stor at blant de med høyere utdanning tjener kvinner kun 74 cents for hver dollar menn tjener [@us_census_gender_earnings_gap].
+Studier fremhever kjønnsforskjeller i lønn som et vedvarende problem.
+Generelt tjener kvinner mindre enn menn, selv når de har tilsvarende kvalifikasjoner og erfaring.
+Gould, Elise and Schieder peker på at årsakene til denne lønnsforskjellen inkluderer diskriminering, forskjellige karrierevalg og at kvinner i større grad velger sektorer med lavere lønnsnivå \[@GouldSchiederGeier2016\] . I tillegg finner en annen artikkel at kvinner ofte har større sannsynlighet for å ta pauser fra arbeidslivet for å ta vare på familie, noe som kan føre til lavere samlet arbeidsopplevelse og dermed lavere lønn \[@OnTheEconomy2020\]. I følge Jennifer Cheeseman Day (2019), er forskjeller så stor at blant de med høyere utdanning tjener kvinner kun 74 cents for hver dollar menn tjener \[@us_census_gender_earnings_gap\].
+Selv om det er gjort fremskritt når det gjelder å redusere lønnsgapet mellom kjønnene, viser forskningen at strukturelle og kulturelle barrierer fortsatt hindrer kvinner i å oppnå likelønn.
+Forskere understreker behovet for politiske tiltak og strukturelle endringer for å rette opp i disse forskjellene, slik at kvinner får likere muligheter til økonomisk fremgang.
 
 ### EDA analyse
 
