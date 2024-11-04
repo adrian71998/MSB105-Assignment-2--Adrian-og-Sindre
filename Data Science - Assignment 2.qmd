@@ -1,8 +1,10 @@
 ---
 title: "Assignment 2 - Adrian og Sindre"
-format: html
+output:
+  bookdown::pdf_document2:
+    number_sections: true
 editor: visual
-lang: "nb"
+lang: nb
 bibliography: kilder.bib
 ---
 
@@ -211,8 +213,6 @@ heights %>%
   delete_part("footer")
 ```
 
-\@ref(tbl:height)
-
 #### Forskjeller mellom de tre inntektsgruppene.
 
 Når vi sammenligner de tre inntektsgruppene — null inntekt, normal inntekt, og høy inntekt — ser vi tydelige forskjeller på flere områder som høyde, vekt, sivilstatus, og utdanningsnivå.
@@ -223,7 +223,7 @@ Det er også en høyere andel kvinner (57 %) i denne gruppen enn menn (43 %).
 Når det gjelder sivilstatus, er 41 % av deltakerne gift, mens de resterende 59 % er ugifte.
 Utdanningsnivået viser at kun 11 % har høyere utdanning, mens en stor del av gruppen (48 %) har ikke collegeutdanning.
 
-I gruppen med normal inntekt er gjennomsnittlig inntekt 46,751.
+I gruppen med normal inntekt, @ref(tbl-normInc) er gjennomsnittlig inntekt 46,751.
 Vi merker oss også en noe høyere gjennomsnittshøyde på 67 tommer, og en vekt på 188 lbs, som gir en BMI på 29.
 Andelen personer som er gift, er 58 %, noe som indikerer at stabil sivilstatus kan være mer vanlig blant personer med en viss inntekt, sammenlignet med gruppen uten inntekt.
 Når det gjelder utdanning, har 26 % av deltakerne høyere utdanning, mens 46 % ikke har det. Dette tyder på at utdanning fortsatt spiller en viktig rolle i å nå dette inntektsnivået, men at det ikke nødvendigvis krever en fullført høyere grad.
@@ -337,7 +337,7 @@ Sammenligner vi kvinner uten inntekt og menn uten inntekt finner vi naturligvis 
 Andelen kvinner som er gift er 51 %, mot kun 30 % for menn.
 Kvinner har også høyere andel med utdanning, sammenlignet med menn.
 
-For normal inntekt er menns gjennomsnittlige inntekt 54,236, mens kvinner ligger på 39,472.
+For normal inntekt, som vi ser i er menns gjennomsnittlige inntekt 54,236, mens kvinner ligger på 39,472.
 Menn er selvsagt høyere og tyngre enn kvinner, men vi merker oss at her har kjønnene lik BMI (29).
 62 % av mennene med normal inntekt er gift, sammenlignet med 54 % av kvinnene.
 Utdanningsnivået er også her noe høyere blant kvinner (29 % mot 23 % for menn).
@@ -430,32 +430,15 @@ heightsNormInc  |>
 
 ```
 
-Plottet \@1st-fig-norm-inc over forteller oss en rekke ting, og bekrefter en del av observasjonene som er diskutert tidligere i paperet.
+Plottet \@ref(fig-norm-inc) over forteller oss en rekke ting, og bekrefter en del av observasjonene som er diskutert tidligere i paperet.
 Fargene på observasjoene bekrefter det vi allerede vet, at menn generelt er høyere enn kvinner, og at flere menn enn kvinner har høy inntekt.
 Den sorte modell-linjen forteller oss i utgangspunktet at det virker å være en positiv sammengeng mellom høyde og inntekt.
 De rød og blå linjene viser også sammenheng mellom høyde og inntekt, men for henholdsvis menn og kvinner.
 Vi ser da at sammenhengen ikke er like tydelig, akkurat som diskutert tidligere i oppgaven, og merker oss at regresjonslinjen er brattere for menn enn for kvinner.
 
 ```{r}
-heightsNormInc %>%
-  ggplot(
-    mapping = aes(
-      x = income
-      )
-    ) +
-  geom_histogram(
-    bins = 30)
-
-heightsNormInc %>%
-  ggplot(
-    mapping = aes(
-      x = height
-      )
-    ) +
-  geom_histogram(
-    bins = 30)
-
-
+#| label: fig-count-income
+#| fig-cap: "Histogram som viser fordeling av inntekt i populasjonen til datasettet"
 heightsNormInc %>%
 ggplot(aes(
   x = income)
@@ -463,7 +446,7 @@ ggplot(aes(
   geom_histogram(aes(
     y = ..density..),
     bins = 30,
-    fill = "green",
+    fill = "blue",
     alpha = 0.6,
     color = "black"
     ) + 
@@ -478,12 +461,44 @@ ggplot(aes(
 ```
 
 ```{r}
+#| label: fig-count-height
+#| fig-cap: "Histogram som viser fordeling av høyde i populasjonen til datasettet"
+heightsNormInc %>%
+  ggplot(
+    mapping = aes(
+      x = height
+    )
+  ) +
+  geom_histogram(
+    bins = 30,
+    aes(y = ..density..),
+    fill = "lightblue",
+    alpha = 0.6,
+    color = "black"
+  ) +
+  geom_density(
+    color = "red", 
+    size = 1
+  ) +
+   labs(title = "Fordeling av høyde",
+       x = "Høyde",
+       y = "Tetthet") +
+  theme_minimal()
+
+```
+
+```{r}
 #| label: fig-BMI-income
 #| fig-cap: "Korrelasjon mellom BMI og inntekt"
 # ønsker å bruke pairs for å sammenligne inntekt og høyde
-pairs(select(heightsNormInc, income, height))
-
 pairs(select(heightsNormInc, bmi, income))
+```
+
+```{r}
+#| label: fig-height-income
+#| fig-cap: "Korrelasjon mellom høyde og inntekt"
+# ønsker å bruke pairs for å sammenligne inntekt og høyde
+pairs(select(heightsNormInc, income, height))
 ```
 
 ```{r}
@@ -505,18 +520,11 @@ facet_wrap(~sex) +
 geom_boxplot()
 ```
 
-Utfra det vi har sett tidligere, både i teoridelen og i den deskriptive statistikken, kan det tyde på at utdanning er en svært viktig faktor for inntekt.
+Utfra det vi har sett tidligere, både i teoridelen og i den deskriptive statistikken, kan det etter modellen \@ref(fig-height-edufac) tyde på at utdanning er en svært viktig faktor for inntekt.
 Den er derfor interessant å sjekke nærmere og høyde kan ha betydning for utdanningsnivå.
 Vi lager derfor en boxplit som viser utdanning i forhold til høyde, og facer denne mht kjønn.
 
 mrk: høyde ser ut til å påvirke utdanning en del, og videre ser vi at utdanning i stor grad preger inntekt.
-
-```{r}
-heights %>%  
-ggplot(mapping = aes(x = edu_fac, y = income)) +
-facet_wrap(~sex) + 
-geom_boxplot()
-```
 
 Notat boxplotter: Utdanning har definitivt innvirkning på inntekt.
 
@@ -560,6 +568,34 @@ ggplot(data = heights,
   facet_wrap(~ sex)
 ```
 
+```{r}
+#| label: fig-height-inc-married
+#| fig-cap: "Sammenheng mellom inntekt og høyde, skiller på utdanning og kjønn"
+ggplot(data = heights,
+       aes(
+         x = height,
+         y = income,
+         color = sex)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue", linetype = "dashed") +  # Legger til en lineær trendlinje
+  labs(
+    x = "Hoyde (cm)",
+    y = "Inntekt (NOK)"
+  ) +
+  theme_minimal() +
+  facet_wrap(~ married)
+```
+
+```{r}
+#| label: fig-income-married
+#| fig-cap: "Boksplot av inntekt mot ekteskap. Modellen er splittet på kjonn og viser menn til venstre, og kvinner til høyre. Det kan virke som det er en positiv sammenheng mellom inntekt og ekteskap både for kvinner og menn, men sterkest for menn"
+
+heights %>%  
+ggplot(mapping = aes(x = married, y = income)) +
+facet_wrap(~sex) + 
+geom_boxplot()
+```
+
 #### Er det virkelig høyde som bestemmer inntekt?
 
 I dette minipaperet har vi innhentet litteratur fra eksterne kilder, i tillegg til å utføre vår egen EDA-analyse for å se om det virkelig er slik at høyde bestemmer inntekt.
@@ -577,7 +613,7 @@ Utdanning trekkes kanskje frem som den klareste faktoren, og dette gjenspeiler s
 Det ble også gjort en interessant observasjon på dette området som viser at det virker å være korrelasjon mellom høyde og utdanning.
 Dette er særlig interessant for oppgavens overordnede problemstilling, ettersom utdanning synes å være den potensielt mest forklarende variabelen for inntekt.
 
-Det ble også gjort interessante funn i forholdet mellom sivilstatus og inntekt.
+Det ble også gjort interessante funn i forholdet mellom sivilstatus og inntekt som vi ser i \@ref(fig-income-married).
 Gifte personer tjener i gjennomsnitt mer, og andelen som er gift er økende i takt med de tre undergruppene som er benyttet i analysen.
 
 Samlet sett trekker analysene i retning av at vi langt i fra med sikkerhet kan si at det isolert sett er høyde som bestemmer inntekt, og at det er mange flere faktorer som spiller inn.
