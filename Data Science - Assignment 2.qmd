@@ -399,8 +399,7 @@ Det er særlig merkbart hvordan andelen gifte personer øker i takt med de tre i
 #| fig-cap: "Plot av inntekt mot høyde. Fra den sorte modell-linjen som er
 #| lagt inn ser vi at det ser ut til å være en positiv sammenheng
 #|  mellom høyde og inntekt. Det er også lagt inn seperate modell-linjer for kvinner og menn Vi merker oss at sammenhengen mellom høyde og inntekt virker mindre når kjønn hensyntas i modell-linjene."
-#| lst-label: lst-norm-inc-plot
-#| lst-cap: "Kode for å generere «scatterplot» vha. `ggplot2`."
+
 heightsNormInc  |> 
   ggplot(
   mapping = aes(
@@ -438,7 +437,7 @@ Vi ser da at sammenhengen ikke er like tydelig, akkurat som diskutert tidligere 
 
 ```{r}
 #| label: fig-count-income
-#| fig-cap: "Histogram som viser fordeling av inntekt i populasjonen til datasettet"
+#| fig-cap: "Histogram som viser fordeling av inntekt i populasjonen til hele datasettet"
 heightsNormInc %>%
 ggplot(aes(
   x = income)
@@ -462,7 +461,7 @@ ggplot(aes(
 
 ```{r}
 #| label: fig-count-height
-#| fig-cap: "Histogram som viser fordeling av høyde i populasjonen til datasettet"
+#| fig-cap: "Histogram som viser fordeling av høyde i populasjonen til hele datasettet"
 heightsNormInc %>%
   ggplot(
     mapping = aes(
@@ -489,21 +488,21 @@ heightsNormInc %>%
 
 ```{r}
 #| label: fig-BMI-income
-#| fig-cap: "Korrelasjon mellom BMI og inntekt"
+#| fig-cap: "Korrelasjon mellom BMI og inntekt. Fuguren viser at det kan være tendenser til at økt BMI kan medføre redusert inntekt."
 # ønsker å bruke pairs for å sammenligne inntekt og høyde
 pairs(select(heightsNormInc, bmi, income))
 ```
 
 ```{r}
 #| label: fig-height-income
-#| fig-cap: "Korrelasjon mellom høyde og inntekt"
+#| fig-cap: "Korrelasjon mellom høyde og inntekt. Figuren viser at det ser ut til å være en korrelasjon mellom høyde og inntekt."
 # ønsker å bruke pairs for å sammenligne inntekt og høyde
 pairs(select(heightsNormInc, income, height))
 ```
 
 ```{r}
 #| label: fig-sex-income
-#| fig-cap: "Viser fordeling av inntekt mellom menn og kvinner i populasjonsutvalget"
+#| fig-cap: "Fuguren viser fordeling av inntekt mellom menn og kvinner #| i populasjonsutvalget. Vi merker oss at langt flere kvinner enn menn #| har ingen til svært lav inntekt. I tillegg ser vi klart flest menn #| blant de som tjener aller best."
 heights %>% 
   ggplot(mapping = aes(x = income, fill = sex, colour = sex)) +
   geom_density(alpha = 0.2, na.rm = TRUE) + 
@@ -512,7 +511,7 @@ heights %>%
 
 ```{r}
 #| label: fig-height-edufac
-#| fig-cap: "Boksplot av utdanning mot høyde. Modellen er splittet på kjonn og viser menn til venstre, og kvinner til høyre. Det kan virke som det er en positiv sammenheng mellom høyde og utdanningsnivå både for kvinner og menn"
+#| fig-cap: "Boksplot av utdanning og høyde. Modellen er splittet på kjonn og viser menn til venstre, og kvinner til høyre. Det kan virke som det er en positiv sammenheng mellom høyde og utdanningsnivå både for kvinner og menn"
 
 heights %>%  
 ggplot(mapping = aes(x = edu_fac, y = height)) +
@@ -524,15 +523,21 @@ Utfra det vi har sett tidligere, både i teoridelen og i den deskriptive statist
 Den er derfor interessant å sjekke nærmere og høyde kan ha betydning for utdanningsnivå.
 Vi lager derfor en boxplit som viser utdanning i forhold til høyde, og facer denne mht kjønn.
 
-mrk: høyde ser ut til å påvirke utdanning en del, og videre ser vi at utdanning i stor grad preger inntekt.
+Vi merker oss at høyde ser ut til å påvirke utdanning en del, og videre skal vi se hvordan utdanning preger inntekt, via lignende boxplot.
 
-Notat boxplotter: Utdanning har definitivt innvirkning på inntekt.
+```{r}
+#| label: fig-height-eduinc
+#| fig-cap: "Boksplot av utdanning og inntekt. Modellen er splittet på kjonn og viser menn til venstre, og kvinner til høyre. Modellen viser tydelig at utdanning er en svært viktig variabel for økning av inntekt, både for menn og kvinner."
 
-Og høyde virker også å spille inn på inntekt.
+heights %>%  
+ggplot(mapping = aes(x = edu_fac, y = income)) +
+facet_wrap(~sex) + 
+geom_boxplot()
+```
 
 ```{r}
 #| label: fig-height-inc-edu
-#| fig-cap: "Sammenheng mellom inntekt og høyde, skiller på utdanning og kjønn"
+#| fig-cap: "Figuren viser sammenheng mellom inntekt og høyde, skiller på utdanning og kjønn"
 ggplot(data = heights,
        aes(
          x = height,
@@ -552,7 +557,7 @@ Det kan virke som om høyde spiller en større rolle desto høyere utdanning man
 
 ```{r}
 #| label: height-inc-sex
-#| fig-cap: "Modellen ser på sammenheng mellom høyde og inntekt med et skille på kjønn"
+#| fig-cap: "Modellen viser sammenhengden mellom høyde og inntekt for henholdsvis menn og kvinner. Det virker å være en klar sammenheng mellom høyde og inntekt for begge kjønn, men det er interessant å merke seg hvor mye brattere linjen er for menn enn kvinner. Dette kan trekke i retning av at høyde er viktigere for menn sin inntekt enn for kvinner."
 ggplot(data = heights,
        aes(
          x = height,
@@ -588,7 +593,7 @@ ggplot(data = heights,
 
 ```{r}
 #| label: fig-income-married
-#| fig-cap: "Boksplot av inntekt mot ekteskap. Modellen er splittet på kjonn og viser menn til venstre, og kvinner til høyre. Det kan virke som det er en positiv sammenheng mellom inntekt og ekteskap både for kvinner og menn, men sterkest for menn"
+#| fig-cap: "Boksplotet viser inntekt mot ekteskap. Modellen er splittet på kjonn og viser menn til venstre, og kvinner til høyre. Det er interessant hvordan gifte menn har betydelig høyere inntekt enn ugifte menn. Det er en liten tendens til dette også for kvinner, men i langt mindre grad."
 
 heights %>%  
 ggplot(mapping = aes(x = married, y = income)) +
