@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ag_comments</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="ag_comments_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ag_comments_files/libs/quarto-html/quarto.js"></script>
+<script src="ag_comments_files/libs/quarto-html/popper.min.js"></script>
+<script src="ag_comments_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ag_comments_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ag_comments_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ag_comments_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ag_comments_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ag_comments_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ag_comments_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ag_comments.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">ag_comments</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="generelt" class="level2">
+<h2 class="anchored" data-anchor-id="generelt">Generelt</h2>
+<p>Fin litteraturgjennomgang (se mine forslag for bruk av inline-sitering for å gjøre dette lettere). Flott gjennomgang av hva dere finner i data. Det avsluttende avsnittet <em>Samsvarer det som fremkommer fra den deskriptive statistikken med funnene fra literaturen?</em> er virkelig bra.</p>
+<p>Dere har utført et grundig og flott arbeid så jeg har prøvd å gjøre tilsvarende i min tilbakemelding. Jeg har prøvd å vise hvordan dere bedre kan utnytte mulighetene i Quarto både når det gjelder kryssreferanser og siteringer. I tillegg bør dere prøve å legge av dere uvaner fra Word med å formatere overskrifter. Bruk de 6 overskriftsnivåene ut fra logisk organisering og stol på de typografiske valgene som er gjort. Hvis dere virkelig mener å ha gode argumenter for å endre på dette kan det gjøres vha. css og scss for html output, templates og styles for Word og lasting av sty-filer i LaTeX. Generelt vil jeg ikke anbefale dette med mindre dere har akutt behov for å finne noe å fylle dagene med ;-)</p>
+<p>I punkt-listingen nedenfor har jeg prøvd å dokumentere endringene jeg forslår. Noe er sikkert glemt. Det finner dere ved å sjekk diff på Github eller History under Git-fanen.</p>
+</section>
+<section id="andre-kommentarer" class="level2">
+<h2 class="anchored" data-anchor-id="andre-kommentarer">Andre kommentarer</h2>
+<ul>
+<li>Litt usikker på hvorfor dere har valgt å bruke <code>output:    bookdown::pdf_document2:     number_sections: true</code> Hvis det er for å få nummererte avsnitt vil jeg heller anbefale Quarto løsningen. bookdown::pdf_document2 benytter rmarkdown som fremdeles er støttet, men utviklingen går mot det nye systemet Quarto. Jeg har lagt inn en Quarto løsning som gir nummererte avsnitt.</li>
+<li>Jeg vil anbefale dere å gjøre mer bruk av såkalt «inline citation» som APA støtter. Se mitt forslag til endring mht. sitering i avsnittene <em>Lønn og høyde</em> og <em>Lønn og bmi</em>. Gjør at siteringene blir mer naturlig integrert med den flytende teksten.</li>
+<li>Det er generelt lurt å bruke informative «citation keys», f.eks vil britt2009 istedenfor published2009 gjøre det lettere å se hvilket paper man viser til. BetterBibTeX utvidelsen til Cotero kan lage slike «cite keys» automatisk.</li>
+<li>Kan være greit å sitere R og modelr pakken. Bruker man funksjonen <code>citation()</code> får man ferdig bibitem for R som bare kan kopieres inn i bib filen. Jeg har bare lagt til «cite key-en» R2024.</li>
+<li>Tilsvarende for <em>modelr</em> er <code>citation("modelr")</code>. Her har jeg lagt til <code>modelr2023</code> som «cite-key».</li>
+<li>Første setning i avsnittet <em>Lønn og kjønn</em> er: «Studier fremhever kjønnsforskjeller i lønn som et vedvarende problem.» Her burde dere hatt noen kildehenvisninger til disse studiene.</li>
+<li>Bruk overskriftnivåene i Quarto, header 1-6. Tenk på logisk struktur, ikke utseende. Hvis dere mener at standard formatering ikke holder mål (det ligger typografisk kunnskap bak utformingen av disse så dere bør ha en god grunn) er det mulig å endre disse. Dette er hovedtanken bak strukturerte tekstsystem (som LaTeX, html, quarto etc.). Forfatteren skal bekymre seg om struktur. Utseende skal ha fornuftige defaults som tar utgangspunkt i typografisk tradisjon, men kan overstyres hvis man virkelig ønsker dette.</li>
+<li>Ikke legg inn formatering (bold i overskriften Innleding) i f.eks overskrifter. Jobb med defaults og så kan dere eventuelt overstyre default formatering til slutt hvis dere virkelig mener det er gode argumenter for dette.</li>
+<li>Jeg har forsøkt å endre overskriftene etter logisk struktur.</li>
+<li>Libraries bør lastes helt i starten av dokumentet slik man lett ser hvilke pakker som må være innstallert for å kjøre dokumentet. Gir man chunken navnet setup (vha. <code>#| label: setup</code>) vil denne bli kjørt hver gang man kjører dokumentet. Bruker man da en ny funksjon fra en pakke man har lagt til i setup vil denne «automatisk» virke.</li>
+<li>Jeg har lagt inn litt kode som bruker vtable::st() for å generere tabeller. Funksjonen gir kompakte tabeller med mye informasjon og krever lite arbeid.</li>
+<li><code>st()</code> har som default at den setter tittel på tabellene. Siden vi bruker Quarto til å gjøre dette får vi dobbelt opp. For å ungå dette bruker vi argumentet out = “retrun” i <code>st()</code>.</li>
+<li>Kommenterte ut <code>print(total_missing)</code> i en chunk og viser hvor man kan få dette fint inn i teksten.</li>
+<li>print(height_stats), lagt inn litt kode for å skrive denne ut som flextable.</li>
+<li>Endret caption: “Deskriptiv statistikk for høyde.” til <code>#| tbl-cap: Deskriptiv statistikk for høyde.</code> som er pandoc måten å gjøre dette på.</li>
+<li><code>@ref(tbl-normInc)</code>, bruk heller <code>@tbl-normInc</code> som er pandoc kryssreferanse og vil virke i «alle» format.</li>
+<li><code>label: men-low-income</code> må være <code>label: tbl-men-low-income</code> for at kryssreferanser og caption skal virke. Tilsvarende for <code>#| label: female-low-income</code>, men-norm-income etc. Label for table MÅ begynne med tbl-, for figure med fig-, for kodelisting lst-. Finnes en del til, men dette er de viktigste</li>
+<li><code>\@ref(fig-income-married)</code> endret til <code>@fig-income-married</code>.</li>
+<li>Endret <code>#| tbl-cap: "Deskriptiv statistikk for delsettet med ingen inntekt."</code> til <code>#| tbl-cap: Deskriptiv statistikk for delsettet med ingen inntekt.</code> som tydeligvis er pandoc måten. Har en anførselstegn rundt teksten forsvinner mellomrom mellom tallet (tabellnummeret) og teksten. Dette lærte seg selv nå ;-)</li>
+<li>Har lagt inn argumentet <code>show_coltype = FALSE</code> i <code>as_flextable()</code> for å slippe rekken i header som angir hvilken type kolonnen er.</li>
+<li><code>\@ref(fig-norm-inc)</code> endret til <code>@rfig-norm-inc</code></li>
+<li>Endret <code>#| fig-cap: "Histogram som viser fordeling av inntekt i populasjonen til hele datasettet" til</code>#| fig-cap: Histogram som viser fordeling av inntekt i populasjonen til hele datasettet.` for å få mellomrom mellom tabellnummer og tittel.</li>
+<li><code>\@ref(fig-height-edufac)</code> endret til <code>@fig-height-edufac</code></li>
+<li>Avsnittet <em>Splittet på kjønn</em>. Her lager dere flere data subsets slik som height_zero_inc_male, heights_zero_inc_female etc. Så vidt jeg kan se bruker dere ikke disse senere i oppgaven. Er dette tilfelle vil jeg anbefale å lage tabellene ad-hoc slik som jeg har forslått for height_zero_inc_male. Da unngår en å få så mange objekter definert i Environment. Dette sparer minne, men gjør det også lettere å holde oversikten. Hvis dere derimot brukte height_zero_inc_male mange steder i dokumentet, f.eks til figurer, statistisk analyse etc., ville det å lage subsettet height_zero_inc_male være en god ide.</li>
+<li>Har endret litt på width i tabellene. Dere hadde 16 mm for alle kolonnne. Dette ga bryting av tekst i første kolonne og std. dev. heading. Endret til å la første kolonne være 30 mm (s.a not married ikke ble brudt). Lot resten være default og da fikk også Std. Dev. tilstrekkelig bredde. Vi er litt sårbare når vi kjører med kompakte tabeller (line_spacing 0.3) siden linjebrudd vil gi overskriving av tekst.</li>
+</ul>
+</section>
+<section id="andre-kommentarer-visualisering" class="level2">
+<h2 class="anchored" data-anchor-id="andre-kommentarer-visualisering">Andre kommentarer visualisering</h2>
+<ul>
+<li>i <code>fig-count-income</code>: ggplot har skiftet fra <code>size</code>til <code>linewidth</code> som argument for å angi linjebredde. Enn så lenge virker begge, men det kan være lurt å skifte til ny standard. <code>size</code> brukes fremdeles for å angi punkt-størrelser etc..</li>
+<li>i <code>fig-BMI-income</code>: Her er det så mye data at det kan være lurt å skifte til et mindre punktsymbol. Har vist bruk av de to parametrene pch (print character) og cex (størrelse). Disse finnes dokumentert graphics::par.</li>
+<li>i fig-sex-income: Her vil jeg faktisk foreslå å droppe <code>facet_wrap()</code>. Det er enklere å sammenlikne tetthetene når de er i samme figur.</li>
+<li>i fig-height-inc-edu: Jeg tror jeg ville droppet dem som har NA for edu. De stjeler for mye plass. Har også foreslått å endre størrelse og alpha for punktene i geom_point. Legg merke til hvordan disse blir satt <em>utenfor</em> <code>aes()</code>. Vi øsnker bare å endre størrelse og alpha ikke at dette skal være egenskaper som illustrerer en variabel, da må de stå utenfor aes() i en mapping. Foreslår også å bruke heltrukket linje istedenfor ‘dashed’ siden vi bare har en linje.</li>
+<li>i fig-height-inc-sex: Viser bare et annet triks for å bli kvitt irriterende melding fra <code>geom_smooth()</code>.</li>
+<li>i fig-income-married: Her tror jeg dere har funnet mye av kjernen i lønnsforskjellene. I disse dataene ser det ut til at giftemål har svært forskjellig effekt for menn og kvinner (kanskje knyttet til tradisjonelle forestillinger om forsørgeransvar og å bli forsørget).</li>
+<li>i fig-height-norminc-sex (som er en variant av fig-height-inc-sex) har jeg foreslått å ta bort de svært høye inntektene (siden de kan ha svært stor innvrikning på regresjonslinjene). Jeg foreslår også å droppe facet_wrap() her. Dette fordi det er lettere å sammenlikne linjer i samme figur. Se bruken av argumentet group i geom_smooth() for å få en regresjonslinje for hver av kjønnene. Jeg lar også egenskapene colour og linestyle bli bestemt av kjønn slik at det er lett å se forskjell på linjene. For punktene har jeg forsøkt med geom_jitter() og å la også shape avhenge av sex. Å vise så mye data i en figur blir aldri perfekt og geom_point() kunne også vært brukt.</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
